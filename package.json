@@ -1,0 +1,19 @@
+{
+  "name": "led-server",
+  "version": "1.0.0",
+  "description": "an adaptation application for LEDs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "xiongjingzhi",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "mqtt": "^3.0.0",
+    "ws": "^7.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "uuid": "^3.3.3"
+  }
+}
