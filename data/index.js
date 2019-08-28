@@ -18,6 +18,6 @@ let wsConnect = {}
 let actions = {}
 
 module.exports = {
-  leds,
+  wsConnect,
   actions
 }

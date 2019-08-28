@@ -13,6 +13,9 @@
     "ws": "^7.1.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.2.2",
+    "eslint-config-alloy": "^2.0.5",
     "nodemon": "^1.19.1",
     "uuid": "^3.3.3"
   }
