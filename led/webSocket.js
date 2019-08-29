@@ -1,4 +1,5 @@
 const WebSocket = require('ws')
+const addLED = require('../data/leds').addLED
 const uuidv4 = require('uuid/v4')
 const restartReq = require('./restart')
 const TIMEOUT = 20 * 1000
@@ -70,7 +71,8 @@ function initWs(port, wsConnect, actions) {
 function addWsConnect(ws, cardId, wsConnect) {
   let isExists = Object.keys(wsConnect).includes(cardId)
   if (!isExists) {
-    wsConnect[cardId] = ws
+    wsConnect[cardId] = {ws}
+    addLED(cardId)
     console.log(`LED ${cardId} 连接成功`)
   }
 }

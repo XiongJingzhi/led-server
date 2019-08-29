@@ -1,10 +1,6 @@
 // 连接池
 // {
-//   'y10-xxxxx': {
-//     ws: wsObject,
-//     group: '1',
-//     enable: false
-//   }
+//   'y10-xxxxx': wsObject,
 // }
 let wsConnect = {}
 
@@ -16,6 +12,15 @@ let wsConnect = {}
 //   }
 // }
 let actions = {}
+
+// led 数据持久层
+// 0 为默认编组
+// {
+//   'y10-xxxxx': {
+//     group: '0',
+//     enable: false
+//   }
+// }
 
 module.exports = {
   wsConnect,

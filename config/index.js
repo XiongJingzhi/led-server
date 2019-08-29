@@ -8,6 +8,11 @@ module.exports = {
       path: '/test?cardId='
     }
   },
+  mqtt: {
+    url: 'mqtt://127.0.0.1',
+    port: 1883,
+    path: '/'
+  },
   server: {
     port: 8083
   }

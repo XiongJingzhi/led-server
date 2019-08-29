@@ -1,4 +1,6 @@
 const webSocketLED = require('./led/webSocket')
+const koaServer = require('./koaServer')
+const mqttServer = require('./mqtt')
 
 function main() {
   // 1、建立ws服务, 等待led安卓卡连接, 存储led数据

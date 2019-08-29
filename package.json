@@ -9,6 +9,7 @@
   "author": "xiongjingzhi",
   "license": "UNLICENSED",
   "dependencies": {
+    "koa": "^2.8.1",
     "mqtt": "^3.0.0",
     "ws": "^7.1.2"
   },
