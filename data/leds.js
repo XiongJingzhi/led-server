@@ -3,7 +3,7 @@ const path = require('path')
 const ledPath = path.join(__dirname, '../data/persistence.json')
 
 function getLEDs() {
-  const led = fs.readFileSync(ledPath, {encoding: 'utf-8'})
+  const led = fs.readFileSync(ledPath, { encoding: 'utf-8' })
   try {
     return JSON.parse(led)
   } catch (error) {
