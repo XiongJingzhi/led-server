@@ -2,7 +2,7 @@
 // {
 //   'y10-xxxxx': wsObject,
 // }
-let wsConnect = {}
+const wsConnect = {}
 
 // 请求池
 // {
@@ -11,7 +11,7 @@ let wsConnect = {}
 //     callback: function(){}
 //   }
 // }
-let actions = {}
+const actions = {}
 
 // led 数据持久层
 // 0 为默认编组

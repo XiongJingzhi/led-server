@@ -1,5 +1,7 @@
 const WebSocket = require('ws')
 const addLED = require('../data/leds').addLED
+const mqttClient = require('../mqtt').mqttClient
+const subscribeHandler = require('../mqtt').subscribeHandler
 const uuidv4 = require('uuid/v4')
 const restartReq = require('./restart')
 const TIMEOUT = 20 * 1000
@@ -46,7 +48,6 @@ function initWs(port, wsConnect, actions) {
         const data = JSON.parse(message)
         if (data.cardId) {
           addWsConnect(ws, data.cardId, wsConnect)
-          console.log('wsConnect', wsConnect)
         } else {
           messageHandler(ws, data, wsConnect, actions)
         }
@@ -66,13 +67,15 @@ function initWs(port, wsConnect, actions) {
       console.log('websocket 错误.', err)
     })
   })
+  return wss
 }
 
 function addWsConnect(ws, cardId, wsConnect) {
-  let isExists = Object.keys(wsConnect).includes(cardId)
+  const isExists = Object.keys(wsConnect).includes(cardId)
   if (!isExists) {
-    wsConnect[cardId] = {ws}
+    wsConnect[cardId] = ws
     addLED(cardId)
+    subscribeHandler(mqttClient, wsConnect)
     console.log(`LED ${cardId} 连接成功`)
   }
 }
@@ -85,8 +88,8 @@ function messageHandler(ws, data, wsConnect, actions) {
       break
     }
   }
-  let action = actions[data._id]
-  let type = data['_type']
+  const action = actions[data._id]
+  const type = data['_type']
   switch (type) {
     case 'restart':
       restartReq(cardId)
@@ -130,8 +133,8 @@ function sendData(cardId, data, actions, callback) {
         actions[actionId] = { callback: callback, status: 'sent' }
       })
       setTimeout(function() {
-        let action = actions[actionId]
-        let status = action.status
+        const action = actions[actionId]
+        const status = action.status
         if (status === 'sent') {
           action.callback(new Error('LED安卓卡返回超时'))
         }

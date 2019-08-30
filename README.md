@@ -2,18 +2,31 @@
 
 ### led ws 测试
 chrome:
-0. const ws = new WebSocket('wx://127.0.0.1:8080')
-1. ws.send(JSON.stringify({"cardId":"y10-2222"}))
+``` javascript
+  const led1 = {"cardId":"y10-1111"}
+  const led2 = {"cardId":"y10-2222"}
+  function createWsClient(message) {
+    const ws = new WebSocket('ws://127.0.0.1:8100')
+     message = JSON.stringify(message)
+    //添加事件监听
+    ws.addEventListener('open', function () {
+      ws.send(message)
+    })
+    return ws
+  }
+```
 
 ### mqtt 测试
 mac:
-0. brew install mosquitto
-1. brew services start mosquitto
-2. mosquitto_pub -t 'Devs\Led\{group}\{id}' -m 'data'
-3. mosquitto_sub -v -t 'Devs\Led\{group}\{id}'
+
+- brew install mosquitto
+- brew services start mosquitto
+- mosquitto_pub -t 'Devs\Led\{group}\{id}' -m 'data'
+- mosquitto_sub -v -t 'Devs\Led\{group}\{id}'
 
 window:
-0. install mosquitto
-1. mosquitto -v
-2. mosquitto_pub -t 'Devs\Led\{group}\{id}' -m 'data'
-3. mosquitto_sub -v -t 'Devs\Led\{group}\{id}'
+
+- install mosquitto
+- mosquitto -v
+- mosquitto_pub -t 'Devs\Led\{group}\{id}' -m 'data'
+- mosquitto_sub -v -t 'Devs\Led\{group}\{id}'

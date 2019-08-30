@@ -1,7 +1,7 @@
 module.exports = {
   led: {
     auth: '1231!@!$!$dfas@4142#df',
-    port: 8080,
+    port: 8100,
     restartNotification: {
       host: '127.0.0.1',
       port: 7777,
