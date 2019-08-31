@@ -23,12 +23,10 @@ mac:
 
 - brew install mosquitto
 - brew services start mosquitto
-- mosquitto_pub -t Devs\Led\{group}\{id} -m 'data'
-- mosquitto_sub -v -t 'Devs\Led\{group}\{id}'
+- node ./test/mqtt.test.js
 
 window:
 
 - install mosquitto
 - mosquitto -v
-- mosquitto_pub -t Devs\\Led\\{group}\\{id} -m data
-- mosquitto_sub -v -t Devs\\Led\\{group}\\{id}
+- node ./test/mqtt.test.js
