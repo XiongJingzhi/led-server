@@ -9,7 +9,9 @@ const requestData = {
   'persistent': true  // 持久化，重启会自动加载url
 }
 
-const topic = 'Devs\\Led\\0\\y10-1111'
+const topic1 = 'Devs\\Led\\0\\y10-1111'
+const topic2 = 'Devs\\Led\\0\\y10-2222'
+
 function initMqttClient(mqttURL) {
   const mqttOption = {
     keepalive: 60,
@@ -23,7 +25,7 @@ function initMqttClient(mqttURL) {
   }
   const client = mqtt.connect(mqttURL, mqttOption)
   client.on('connect', function() {
-    console.log('mqtt连接成功')
+    console.log('test 连接成功')
   })
   client.on('close', function() {
     console.log('mqtt连接已断开')
@@ -34,5 +36,11 @@ function initMqttClient(mqttURL) {
 const client = initMqttClient(mqttURL)
 
 setTimeout(function() {
-  client.publish(topic, Buffer.from(JSON.stringify(requestData)))
+  client.publish(topic1, Buffer.from(JSON.stringify(requestData)))
 }, 3 * 1000)
+
+
+setTimeout(function() {
+  client.publish(topic2, Buffer.from(JSON.stringify(requestData)))
+  client.end()
+}, 6 * 1000)

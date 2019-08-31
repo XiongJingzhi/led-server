@@ -1,14 +1,15 @@
 const Koa = require('koa')
 const app = new Koa()
-const initWs = require('./led').initWs
-const port = require('./config').server.port
-const getConnectStatus = require('./data/connectPool').getConnectStatus
+const LedWebSocket = require('./led').LedWebSocket
+const ledPort = require('./config').led.port
+const ledWebSocket = new LedWebSocket(ledPort)
+const serverPort = require('./config').server.port
 
 app.use(async ctx => {
-  ctx.body = getConnectStatus()
+  ctx.body = ledWebSocket.getConnectLEDs()
 })
 
-app.listen(port, function() {
-  initWs()
+app.listen(serverPort, function() {
+  ledWebSocket.initWs()
   console.log('已开启led服务连接')
 })

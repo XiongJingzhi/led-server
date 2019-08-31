@@ -1,18 +1,15 @@
-const getConnectStatus = require('../data/connectPool').getConnectStatus
 const updateLED = require('../data/leds').updateLED
 
-function enableHandler(cardId, data, callback) {
+function enableHandler(cardId, connectLEDs, data, callback) {
   if (data.type === 'startServer') {
     updateLED(cardId, null, true)
   }
-  const allConnect = getConnectStatus()
-  if (allConnect[cardId]['enable']) {
+  if (connectLEDs[cardId]['enable']) {
     callback()
   }
 }
 
-function messageHandler(topic, message) {
-  console.log('sendData',)
+function messageHandler(topic, message, ws) {
   const cardId = topic.split(/\\/).pop()
   if (message.toString() === 'init') {
     console.log(`${topic} 订阅成功`)
@@ -20,11 +17,9 @@ function messageHandler(topic, message) {
   }
   try {
     const data = JSON.parse(message.toString())
-    const sendData = require('../led/webSocket').sendData
-    const actions = require('../data/connectPool').actions
-    console.log('sendData, actions', sendData, actions)
-    enableHandler(cardId, data, function() {
-      sendData(cardId, data, actions, function(data) {
+    const connectLEDs = ws.getConnectLEDs()
+    enableHandler(cardId, connectLEDs, data, function() {
+      ws.sendData(cardId, data, function(data) {
         console.log('data', data)
       })
     })
