@@ -14,6 +14,8 @@ chrome:
     })
     return ws
   }
+  const ws1 = createWsClient(led1)
+  const ws2 = createWsClient(led2)
 ```
 
 ### mqtt 测试
@@ -21,12 +23,12 @@ mac:
 
 - brew install mosquitto
 - brew services start mosquitto
-- mosquitto_pub -t 'Devs\Led\{group}\{id}' -m 'data'
+- mosquitto_pub -t Devs\Led\{group}\{id} -m 'data'
 - mosquitto_sub -v -t 'Devs\Led\{group}\{id}'
 
 window:
 
 - install mosquitto
 - mosquitto -v
-- mosquitto_pub -t 'Devs\Led\{group}\{id}' -m 'data'
-- mosquitto_sub -v -t 'Devs\Led\{group}\{id}'
+- mosquitto_pub -t Devs\\Led\\{group}\\{id} -m data
+- mosquitto_sub -v -t Devs\\Led\\{group}\\{id}

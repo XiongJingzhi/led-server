@@ -21,6 +21,9 @@
     "uuid": "^3.3.3"
   },
   "nodemonConfig": {
-    "ignore": ["data/persistence.json"]
+    "ignore": [
+      "data/persistence.json",
+      "test"
+    ]
   }
 }

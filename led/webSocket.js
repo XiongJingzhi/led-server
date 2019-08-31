@@ -125,7 +125,8 @@ function sendData(cardId, data, actions, callback) {
   try {
     const jsonData = JSON.stringify(data)
     const actionId = uuidv4()
-    const ws = actions[cardId]
+    const wsConnect = require('../data/connectPool').wsConnect
+    const ws = wsConnect[cardId]
     if (!ws) {
       callback(new Error(cardId + '不存在'))
     } else {

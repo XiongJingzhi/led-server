@@ -3,21 +3,29 @@ const messageHandler = require('./message').messageHandler
 const mqttConfig = require('../config/index').mqtt
 const mqttURL = mqttConfig.url + ':' + mqttConfig.port + mqttConfig.path
 const wsConnect = require('../data/connectPool').wsConnect
-const getLEDs = require('../data/leds').getLEDs
+const getConnectStatus = require('../data/connectPool').getConnectStatus
 
-function initMqttClient(mqttURL, options = null, wsConnect) {
-  const client = mqtt.connect(mqttURL, options)
+function initMqttClient(mqttURL, wsConnect) {
+  const mqttOption = {
+    keepalive: 60,
+    reconnectPeriod: 5 * 1000,
+    connectTimeout: 30 * 1000,
+    will: {
+      topic: 'close',
+      payload: 'led connection close'
+    },
+    resubscribe: true
+  }
+  const client = mqtt.connect(mqttURL, mqttOption)
   client.on('connect', function() {
+    console.log('mqtt连接成功')
     subscribeHandler(client, wsConnect)
   })
   client.on('message', function(topic, message) {
-    // message is Buffer
-    // console.log(message.toString())
     messageHandler(topic, message)
   })
   client.on('close', function() {
-    console.log('mqtt服务断开')
-    client.end()
+    console.log('mqtt连接已断开')
   })
   return client
 }
@@ -35,17 +43,6 @@ function subscribeHandler(client, wsConnect) {
   }
 }
 
-function getConnectStatus(wsConnect) {
-  const LEDs = getLEDs()
-  const connectStatus = {}
-  Object.keys(wsConnect).forEach(item => {
-    connectStatus[item] = {
-      ...LEDs[item]
-    }
-  })
-  return connectStatus
-}
-
 // Devs\Led\{group}\{id}
 function getTopics(wsConnect) {
   const connectStatus = getConnectStatus(wsConnect)
@@ -58,6 +55,6 @@ function getTopics(wsConnect) {
 }
 
 module.exports = {
-  mqttClient: initMqttClient(mqttURL, null, wsConnect),
+  mqttClient: initMqttClient(mqttURL, wsConnect),
   subscribeHandler
 }

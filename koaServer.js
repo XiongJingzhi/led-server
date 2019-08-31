@@ -2,10 +2,10 @@ const Koa = require('koa')
 const app = new Koa()
 const initWs = require('./led').initWs
 const port = require('./config').server.port
-const getLEDs = require('./data/leds').getLEDs
+const getConnectStatus = require('./data/connectPool').getConnectStatus
 
 app.use(async ctx => {
-  ctx.body = getLEDs()
+  ctx.body = getConnectStatus()
 })
 
 app.listen(port, function() {
